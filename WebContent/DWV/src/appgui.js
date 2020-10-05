@@ -57,11 +57,11 @@ dwv.gui.getWindowSize = function () {
     //return { 'width': ($(window).width()), 'height': ($(window).height() - 147) };
 	//return { 'width': ($(window).width() - 565)  , 'height': $(window).height() - 147 };
 	//console.log(document.getElementById("lc2").className);
-	if(document.getElementById("lc2").className.indexOf("hide") > -1){
+	/*if(document.getElementById("lc2").className.indexOf("hide") > -1){
 		return { 'width': ($(window).width() - 600)  , 'height': $(window).height() - 147 };
-	}else{
-		return { 'width': ($(window).width() - 600) / 2  , 'height': $(window).height() - 147 };
-	}
+	}else{*/
+		return { 'width': ($(window).width() - 600) / parseInt(RowNumberOfLayout,10) , 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10) };
+	//}
 };
 // Prompt
 dwv.gui.prompt = dwv.gui.base.prompt;
@@ -379,6 +379,7 @@ function loadCataLog(app){
 			
 			//点击方法
 			$(".wj").click(function(){
+				debugger;
 				//dicomList = ["http://localhost:8080/test/xj/test_wxy/3/test.dcm"];
 				$(this).css("background-color","#373737");
 				$(this).siblings().css("background-color","#252525");

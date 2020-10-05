@@ -8,18 +8,34 @@ body {
 .layerContainer1 { 
     position:relative ; padding: 0; border:3px solid #00ff80;
        }
+.layerContainer2 { 
+    position:relative ; padding: 0; border:3px solid #ff0000;
+       }
+.layerContainer3 { 
+    position:relative ; padding: 0; border:3px solid #ff0000;
+       }
+.layerContainer4 { 
+    position:relative ; padding: 0; border:3px solid #ff0000;
+       }
+.layerContainer5 { 
+    position:relative ; padding: 0; border:3px solid #ff0000;
+       }
 .imageLayer { 
     position: absolute;
     left: 0px; }  
 .imageLayer0 { 
     position: absolute;
     left: 0px; }
-.imageLayer1 { 
+.imageLayer1,.imageLayer2,.imageLayer3,.imageLayer4,.imageLayer5 { 
     position: absolute;
     left: 0px; }
 .drawDiv { position: absolute; pointer-events: none; }
 .drawDiv0 { position: absolute; pointer-events: none; }
+.drawDiv2 { position: absolute; pointer-events: none; }
 .drawDiv1 { position: absolute; pointer-events: none; }
+.drawDiv3 { position: absolute; pointer-events: none; }
+.drawDiv4 { position: absolute; pointer-events: none; }
+.drawDiv5 { position: absolute; pointer-events: none; }
 .dropBox { 
     border: 5px dashed #ccc;
     margin: 20px auto; }
@@ -30,14 +46,14 @@ body {
 /* Info */
 .info { color: #cde; text-shadow: 1px 1px #000; font-size: 80%; }
 .infoc { color: #ff0; text-shadow: 1px 1px #000; font-size: 120%; }
-.infotl0,.infotl1 { position: absolute; top: 0; left: 0; text-align: left; }
-.infotc0,.infotc1 { position: absolute; top: 0; left: 50%; right: 50%; text-align: center; }
-.infotr0,.infotr1 { position: absolute; top: 0; right: 0; text-align: right; }
-.infocl0,.infocl1 { position: absolute; bottom: 50%; left: 0; text-align: left; }
-.infocr0,.infocr1 { position: absolute; bottom: 50%; right: 2px; text-align: right; }
-.infobl0,.infobl1 { position: absolute; bottom: 0; left: 0; text-align: left; }
-.infobc0,.infobc1 { position: absolute; bottom: 0; left: 50%; right: 50%; text-align: center; }
-.infobr0,.infobr1 { position: absolute; bottom: 0; right: 0; text-align: right; }
+.infotl0,.infotl1,.infotl2,.infotl3,.infotl4,.infotl5 { position: absolute; top: 0; left: 0; text-align: left; }
+.infotc0,.infotc1,.infotc2,.infotc3,.infotc4,.infotc5 { position: absolute; top: 0; left: 50%; right: 50%; text-align: center; }
+.infotr0,.infotr1,.infotr2,.infotr3,.infotr4,.infotr5 { position: absolute; top: 0; right: 0; text-align: right; }
+.infocl0,.infocl1,.infocl2,.infocl3,.infocl4,.infocl5 { position: absolute; bottom: 50%; left: 0; text-align: left; }
+.infocr0,.infocr1,.infocr2,.infocr3,.infocr4,.infocr5 { position: absolute; bottom: 50%; right: 2px; text-align: right; }
+.infobl0,.infobl1,.infobl2,.infobl3,.infobl4,.infobl5 { position: absolute; bottom: 0; left: 0; text-align: left; }
+.infobc0,.infobc1,.infobc2,.infobc3,.infobc4,.infobc5 { position: absolute; bottom: 0; left: 50%; right: 50%; text-align: center; }
+.infobr0,.infobr1,.infobr2,.infobr3,.infobr4,.infobr5 { position: absolute; bottom: 0; right: 0; text-align: right; }
 
 .plot { position: absolute; width: 100px; height: 50px; bottom: 15px; right: 0; }
 .infoLayer0 ul { margin: 0; padding: 2px; list-style-type: none; }
@@ -46,6 +62,18 @@ body {
 .infoLayer1 ul { margin: 0; padding: 2px; list-style-type: none; }
 .infoLayer1 li { margin-top: 0; }
 .infoLayer1 canvas { margin: 0; padding: 2px; }
+.infoLayer2 ul { margin: 0; padding: 2px; list-style-type: none; }
+.infoLayer2 li { margin-top: 0; }
+.infoLayer2 canvas { margin: 0; padding: 2px; }
+.infoLayer3 ul { margin: 0; padding: 2px; list-style-type: none; }
+.infoLayer3 li { margin-top: 0; }
+.infoLayer3 canvas { margin: 0; padding: 2px; }
+.infoLayer4 ul { margin: 0; padding: 2px; list-style-type: none; }
+.infoLayer4 li { margin-top: 0; }
+.infoLayer4 canvas { margin: 0; padding: 2px; }
+.infoLayer5 ul { margin: 0; padding: 2px; list-style-type: none; }
+.infoLayer5 li { margin-top: 0; }
+.infoLayer5 canvas { margin: 0; padding: 2px; }
 
 /* Tag list */
 table.tagsTable { border-collapse: collapse; }

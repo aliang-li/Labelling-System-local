@@ -1,17 +1,17 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-
+<%@page import="com.itheima.utils.HTML_td"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.regex.Pattern" %>
 <%@page import="java.util.regex.Matcher" %>
 <%@page import="java.util.List"%> 
 <%@page import="java.util.Arrays"%> 
 <%@page import="com.sun.media.jfxmedia.events.NewFrameEvent"%>
-<%-- <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%> --%>
-
-
-
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="cn.itcast.goods.user.domain.User"%>
+<%@page import="com.itheima.utils.CompratorByLastModified"%>
+<%@page import="com.itheima.utils.CompratorByName"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ page import="java.io.File"%>
@@ -76,7 +76,7 @@ pageEncoding="UTF-8"%>
     <%  
     //获取该目录下的所有文件和目录的文件名     
 
-   /*  String path=(String)session.getAttribute("path");
+    String path=(String)session.getAttribute("path");
     System.out.println("path="+path);
     
     String path1;
@@ -100,7 +100,9 @@ pageEncoding="UTF-8"%>
     
     
     
-
+  /*   String path1=(String)session.getAttribute("path1");
+    path3 =path1.substring(path1.lastIndexOf('\\')+1)+"\\\\";
+    System.out.println("path3="+path1); */
     
     
     file = new File(path);
@@ -116,19 +118,21 @@ pageEncoding="UTF-8"%>
     for (int i = 0;i<files.length;i++){
         System.out.println(files[i]);
         
- 
+       /*  parentPath = file.getParent(); // D:\wzy */
+      /*   parentDir = file.getParentFile(); // D:\wzy  */
         parentPath = file.getCanonicalPath();
         
-        parentPath=parentPath.substring(parentPath.lastIndexOf('/')+1)+"/";
+        //parentPath=parentPath.substring(parentPath.lastIndexOf('/')+1)+"/";
+        parentPath=parentPath.substring(parentPath.lastIndexOf('\\')+1)+"/";
         
         System.out.println("parentPath="+parentPath);
-        files[i]="\"http://222.24.62.190:8090\\\\test\\\\"+pathname1+"\\\\"+path4+"\\\\"+parentPath+files[i]+"\""; 
- 
+        files[i]="\"http://localhost:8080\\\\test\\\\"+pathname1+"\\\\"+path4+"\\\\"+parentPath+files[i]+"\""; 
+  /*       files[i]="http://222.24.62.190:8090\\\\try\\\\"+parentPath+files[i]; */
         System.out.println("f123  "+files[i]);
-    } */
+    }
     %>
 
-     <%/* String str="[";
+     <%String str="[";
    for (int i=0; i<files.length; i++){ 
 	   if(i!= files.length-1){
                      str= str+files[i]+",";
@@ -136,13 +140,12 @@ pageEncoding="UTF-8"%>
 	   else {
 		   str= str+files[i]+"]";
 	   }
-    } */
-    String str = "http://localhost:8080/three/merge.nii.gz";
+    }
     System.out.println(str);%>
      
     <!-- the container for the renderers -->
     <div id="head" style="width: 100%; height: 5%; background-color:#1d1d1d;" >
-    <a href="http://222.24.62.190:8090/BB/DWV/index.jsp" target="_blank" style="margin-left: 10px;">
+    <a href="http://localhost:8080/BB/DWV/index.jsp" target="_blank" style="margin-left: 10px;">
       <button class="button"> << 返回 </button>
     </a> 
     </div>
@@ -161,7 +164,8 @@ pageEncoding="UTF-8"%>
     window.name = "result"</script>
     
     <script type="text/javascript">//<![CDATA[
-    window.onload = function() {    
+    window.onload = function() {   
+    	debugger;
     	// try to create the 3D renderer    
     	_webGLFriendly = true;
         try {
@@ -179,7 +183,7 @@ pageEncoding="UTF-8"%>
         sliceX = new X.renderer2D();
         sliceX.container = 'sliceX';
         sliceX.orientation = 'X';
-        sliceX.init();
+        sliceX.init();  //创建并渲染了canvas及canvas中context上下文，new了loader加载器、camera相机。并添加了许多监听器
         // .. for Y
         var sliceY = new X.renderer2D();
         sliceY.container = 'sliceY';
@@ -196,7 +200,7 @@ pageEncoding="UTF-8"%>
         var volume = new X.volume();
         // map the data url to each of the slices
 
-        volume.file='<%=str%>';
+        volume.file=<%=str%>;
     	  
         <%-- <%for (int i=0; i<files.length; i++){ %>
         volume.file[<%=i%>] = <%=files[i]%>;
@@ -205,18 +209,23 @@ pageEncoding="UTF-8"%>
         sliceX.add(volume);
 
         // start the loading/rendering
+        debugger;
         sliceX.render();
+        console.log(sliceX);
+        console.log(sliceX._frameBuffer);
 
         //
         // THE GUI
         //
         // the onShowtime method gets executed after all files were fully loaded and
-        /* // just before the first rendering attempt */
+        // just before the first rendering attempt
         sliceX.onShowtime = function() {
+        	debugger;
         	//
         	// add the volume to the other 3 renderers
         	//
         	sliceY.add(volume);
+        	debugger;
         	sliceY.render();
           	sliceZ.add(volume);
           	sliceZ.render();

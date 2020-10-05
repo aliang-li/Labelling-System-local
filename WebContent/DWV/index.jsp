@@ -346,12 +346,85 @@ display:none;}
 								</div>
 							</div> 
 						</td>
+						<!-- 用于显示生成的冠状面与矢状面的两个div -->
+						<td id="lc5" class="hide content4" style="border-left:1px solid #252525;" align="middle">
+							<div class="layerContainer4">
+								<div class="dropBox4"></div>
+								<canvas class="imageLayer4">Only for HTML5 compatible browsers...</canvas>
+								<div class="drawDiv4"></div>
+								<div class="infoLayer4">
+									<div class="infotl4 info"></div>
+									<div class="infotc4 infoc"></div>
+									<div class="infotr4 info"></div>
+									<div class="infocl4 infoc"></div>
+									<div class="infocr4 infoc"></div>
+									<div class="infobl4 info"></div>
+									<div class="infobc4 infoc"></div>
+									<div class="infobr4 info"></div>
+								</div>
+							</div> 
+						</td><td id="lc6" class="hide content5" style="border-left:1px solid #252525;" align="middle">
+							<div class="layerContainer5">
+								<div class="dropBox5"></div>
+								<canvas class="imageLayer5">Only for HTML5 compatible browsers...</canvas>
+								<div class="drawDiv5"></div>
+								<div class="infoLayer5">
+									<div class="infotl5 info"></div>
+									<div class="infotc5 infoc"></div>
+									<div class="infotr5 info"></div>
+									<div class="infocl5 infoc"></div>
+									<div class="infocr5 infoc"></div>
+									<div class="infobl5 info"></div>
+									<div class="infobc5 infoc"></div>
+									<div class="infobr5 info"></div>
+								</div>
+							</div> 
+						</td>
+					</tr>
+					<tr>
+						<td id="lc3" class="hide content2" style="border-left:1px solid #252525;" align="middle">
+							<div class="layerContainer2">
+								<div class="dropBox2"></div>
+								<canvas class="imageLayer2">Only for HTML5 compatible browsers...</canvas>
+								<div class="drawDiv2"></div>
+								<div class="infoLayer2">
+									<div class="infotl2 info"></div>
+									<div class="infotc2 infoc"></div>
+									<div class="infotr2 info"></div>
+									<div class="infocl2 infoc"></div>
+									<div class="infocr2 infoc"></div>
+									<div class="infobl2 info"></div>
+									<div class="infobc2 infoc"></div>
+									<div class="infobr2 info"></div>
+								</div>
+							</div> 
+						</td>
+						<td id="lc4" class="hide content3" style="border-left:1px solid #252525;" align="middle">
+							<div class="layerContainer3">
+								<div class="dropBox3"></div>
+								<canvas class="imageLayer3">Only for HTML5 compatible browsers...</canvas>
+								<div class="drawDiv3"></div>
+								<div class="infoLayer3">
+									<div class="infotl3 info"></div>
+									<div class="infotc3 infoc"></div>
+									<div class="infotr3 info"></div>
+									<div class="infocl3 infoc"></div>
+									<div class="infocr3 infoc"></div>
+									<div class="infobl3 info"></div>
+									<div class="infobc3 infoc"></div>
+									<div class="infobr3 info"></div>
+								</div>
+							</div> 
+						</td>
 					</tr>
 					</table>
 				</div>
 				<div id="rightPanel">
 					<div class="localtion"></div>
-					<button id="changeLayout">切换布局</button>
+					<button id="changeLayout1_1">1X1布局</button>
+					<button id="changeLayout1_2">1X2布局</button>
+					<button id="changeLayout2_2">2X2布局</button>
+					<button id="generateXY">矢状面、冠状面</button>
 					<div class="clear"></div>
 					<!-- Toolbar -->
 					<div class="toolbar" style="width: 300px;text-align:left;"></div>
@@ -502,16 +575,57 @@ display:none;}
 	       //console.log("cliWidth:" + cliWidth);
 	       //console.log("cliHeight:"+ cliHeight);
 	    })  
-	    $("#changeLayout").click(function(){
+	    $("#changeLayout1_1").click(function(){
 	    		isToggle = 1;
-	    	   console.log("改变布局！！");
-	    	   $("#lc2").toggleClass("hide");
+	    		ColNumberOfLayout = 1;
+	    		RowNumberOfLayout = 1;
+	    	   console.log("1X1 改变布局！！");
+	    	   $("#lc2").addClass("hide");
+	    	   $("#lc3").addClass("hide");
+	    	   $("#lc4").addClass("hide");
+	    	   $("#lc5").addClass("hide");
+	    	   $("#lc6").addClass("hide");
+	    	   readyApp.fitToSize({ 'width': ($(window).width() - 600) / parseInt( RowNumberOfLayout,10 ) , 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10) });
+
+		})
+	    $("#changeLayout1_2").click(function(){
+	    		isToggle = 1;
+	    		ColNumberOfLayout = 1;
+	    		RowNumberOfLayout = 2;
+	    	   console.log("1X2 改变布局！！");
+	    	   $("#lc2").removeClass("hide");
+	    	   $("#lc3").addClass("hide");
+	    	   $("#lc4").addClass("hide");
+	    	   $("#lc5").addClass("hide");
+	    	   $("#lc6").addClass("hide");
+	    	   readyApp.fitToSize({ 'width': ($(window).width() - 600) / parseInt( RowNumberOfLayout,10 ) , 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10) });
 	    	   
-	    	   if(document.getElementById("lc2").className.indexOf("hide") > -1){
-	    	    	readyApp.fitToSize({ 'width': ($(window).width() - 600)  , 'height': $(window).height() - 147 });
-	    	    }else{
-	    	        readyApp.fitToSize({ 'width': ($(window).width() - 600) / 2 , 'height': $(window).height() - 147 });
-	    	   }
+		})
+		$("#changeLayout2_2").click(function(){
+	    		isToggle = 1;
+	    		ColNumberOfLayout = 2;
+	    		RowNumberOfLayout = 2;
+	    	   console.log("2X2 改变布局！！");
+	    	   $("#lc2").removeClass("hide");
+	    	   $("#lc3").removeClass("hide");
+	    	   $("#lc4").removeClass("hide");
+	    	   $("#lc5").addClass("hide");
+	    	   $("#lc6").addClass("hide");
+	    	   readyApp.fitToSize({ 'width': ($(window).width() - 600) / parseInt( RowNumberOfLayout,10 ) , 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10)  });
+	    	
+		})
+		
+		$("#generateXY").click(function(){
+	    		
+	    	   console.log("生成矢状面");
+	    	   $("#lc2").addClass("hide");
+	    	   $("#lc3").addClass("hide");
+	    	   $("#lc4").addClass("hide");
+	    	   $("#lc5").removeClass("hide");
+	    	   $("#lc6").removeClass("hide");
+	    	   RowNumberOfLayout = 3;
+	    	   ColNumberOfLayout = 1;
+	    	   readyApp.generateXYSlices();
 		})
 	})
 </script>
