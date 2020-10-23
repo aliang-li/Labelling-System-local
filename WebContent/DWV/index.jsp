@@ -103,6 +103,12 @@ display:none;}
 	text-align:center;
 	
 }
+/* 左侧布局的滚动条 */
+#leftPanel{  
+ width:250px;
+ height:100%;
+ overflow-y:auto;
+}
 #rightPanel{
 	width:300px;
 	padding-left:5px;
@@ -117,8 +123,31 @@ display:none;}
 .toolbar .ui-btn-icon-top {
     padding-top: 2.5em;
 }
-#changeLayout{
-	 padding:.5em 0em;
+#changeLayoutBtn{
+	 
+}
+.layout-menu{
+	position:relative;
+	dispaly: inline-block;	
+	padding:.5em 0em;
+}
+.layout-content{
+	position:absolute;
+	display:none; 
+	min-width:150px;
+	z-index:999999;
+	background:black;
+}
+.layout-content a{
+	display:block;
+	text-decoration:none;
+	color:white;
+}
+.layout-menu:hover .layout-content {
+    display: block;
+}
+.content0, .content1, .content2, .content3, .content4, .content5 { 
+    position:relative ; padding: 0; 
 }
 </style>
 <!-- mobile web app -->
@@ -180,6 +209,11 @@ display:none;}
 	src="node_modules/dwv/decoders/rii-mango/lossless-min.js"></script>
 <!-- dwv -->
 <script type="text/javascript" src="node_modules/dwv/dist/dwv.js"></script>
+
+
+
+<script type="text/javascript" src="../test3D/js/xtk_edge.js"></script>
+<script type="text/javascript" src="../test3D/js/xtk_xdat.gui.js"></script>
 
 
 <!-- Launch the app -->
@@ -270,6 +304,7 @@ display:none;}
 				})
 			})
 </script>
+
 </head>
 
 <body>
@@ -309,123 +344,133 @@ display:none;}
 				<div id="contentPanel">
 					<table style="width:;">
 					<tr>
-						<td  class="content0" align="middle">
+						<td id="lc1" class="content0" align="middle">
 							<!-- Layer Container -->
 							<div class="layerContainer0">
 								<div class="dropBox0"></div>
-								<canvas id="canvas0" class="imageLayer0">Only for HTML5 compatible browsers...</canvas>
+								<canvas class="imageLayer0">Only for HTML5 compatible browsers...</canvas>
+								<div class="positionLineDiv0 hide"></div>
 								<div class="drawDiv0"></div>
-								<div class="infoLayer0">
-									<div class="infotl0 info"></div>
-									<div class="infotc0 infoc"></div>
-									<div class="infotr0 info"></div>
-									<div class="infocl0 infoc"></div>
-									<div class="infocr0 infoc"></div>
-									<div class="infobl0 info"></div>
-									<div class="infobc0 infoc"></div>
-									<div class="infobr0 info"></div>
-								</div>
-								<!-- /infoLayer -->
 							</div>
 							<!-- /layerContainer -->
+							<div class="infoLayer0">
+								<div class="infotl0 info"></div>
+								<div class="infotc0 infoc"></div>
+								<div class="infotr0 info"></div>
+								<div class="infocl0 infoc"></div>
+								<div class="infocr0 infoc"></div>
+								<div class="infobl0 info"></div>
+								<div class="infobc0 infoc"></div>
+								<div class="infobr0 info"></div>
+							</div>
+							<!-- /infoLayer -->
 						</td>
 						<td id="lc2" class="hide content1" style="border-left:1px solid #252525;" align="middle">
 							<div class="layerContainer1">
 								<div class="dropBox1"></div>
 								<canvas class="imageLayer1">Only for HTML5 compatible browsers...</canvas>
 								<div class="drawDiv1"></div>
-								<div class="infoLayer1">
-									<div class="infotl1 info"></div>
-									<div class="infotc1 infoc"></div>
-									<div class="infotr1 info"></div>
-									<div class="infocl1 infoc"></div>
-									<div class="infocr1 infoc"></div>
-									<div class="infobl1 info"></div>
-									<div class="infobc1 infoc"></div>
-									<div class="infobr1 info"></div>
-								</div>
 							</div> 
+							<div class="infoLayer1">
+								<div class="infotl1 info"></div>
+								<div class="infotc1 infoc"></div>
+								<div class="infotr1 info"></div>
+								<div class="infocl1 infoc"></div>
+								<div class="infocr1 infoc"></div>
+								<div class="infobl1 info"></div>
+								<div class="infobc1 infoc"></div>
+								<div class="infobr1 info"></div>
+							</div>
 						</td>
-						<!-- 用于显示生成的冠状面与矢状面的两个div -->
 						<td id="lc5" class="hide content4" style="border-left:1px solid #252525;" align="middle">
 							<div class="layerContainer4">
 								<div class="dropBox4"></div>
 								<canvas class="imageLayer4">Only for HTML5 compatible browsers...</canvas>
+								<div class="positionLineDiv1 hide"></div>
 								<div class="drawDiv4"></div>
-								<div class="infoLayer4">
-									<div class="infotl4 info"></div>
-									<div class="infotc4 infoc"></div>
-									<div class="infotr4 info"></div>
-									<div class="infocl4 infoc"></div>
-									<div class="infocr4 infoc"></div>
-									<div class="infobl4 info"></div>
-									<div class="infobc4 infoc"></div>
-									<div class="infobr4 info"></div>
-								</div>
 							</div> 
-						</td><td id="lc6" class="hide content5" style="border-left:1px solid #252525;" align="middle">
-							<div class="layerContainer5">
-								<div class="dropBox5"></div>
-								<canvas class="imageLayer5">Only for HTML5 compatible browsers...</canvas>
-								<div class="drawDiv5"></div>
-								<div class="infoLayer5">
-									<div class="infotl5 info"></div>
-									<div class="infotc5 infoc"></div>
-									<div class="infotr5 info"></div>
-									<div class="infocl5 infoc"></div>
-									<div class="infocr5 infoc"></div>
-									<div class="infobl5 info"></div>
-									<div class="infobc5 infoc"></div>
-									<div class="infobr5 info"></div>
-								</div>
-							</div> 
+							<div class="infoLayer4">
+								<div class="infotl4 info"></div>
+								<div class="infotc4 infoc"></div>
+								<div class="infotr4 info"></div>
+								<div class="infocl4 infoc"></div>
+								<div class="infocr4 infoc"></div>
+								<div class="infobl4 info"></div>
+								<div class="infobc4 infoc"></div>
+								<div class="infobr4 info"></div>
+							</div>
 						</td>
+					
 					</tr>
 					<tr>
-						<td id="lc3" class="hide content2" style="border-left:1px solid #252525;" align="middle">
+						<td id="lc3" class="hide content2" style="border-top:1px solid #252525;" align="middle">
 							<div class="layerContainer2">
 								<div class="dropBox2"></div>
 								<canvas class="imageLayer2">Only for HTML5 compatible browsers...</canvas>
 								<div class="drawDiv2"></div>
-								<div class="infoLayer2">
-									<div class="infotl2 info"></div>
-									<div class="infotc2 infoc"></div>
-									<div class="infotr2 info"></div>
-									<div class="infocl2 infoc"></div>
-									<div class="infocr2 infoc"></div>
-									<div class="infobl2 info"></div>
-									<div class="infobc2 infoc"></div>
-									<div class="infobr2 info"></div>
-								</div>
 							</div> 
+							<div class="infoLayer2">
+								<div class="infotl2 info"></div>
+								<div class="infotc2 infoc"></div>
+								<div class="infotr2 info"></div>
+								<div class="infocl2 infoc"></div>
+								<div class="infocr2 infoc"></div>
+								<div class="infobl2 info"></div>
+								<div class="infobc2 infoc"></div>
+								<div class="infobr2 info"></div>
+							</div>
 						</td>
-						<td id="lc4" class="hide content3" style="border-left:1px solid #252525;" align="middle">
+						<td id="lc4" class="hide content3" style="border-top:1px solid #252525;border-left:1px solid #252525;" align="middle">
 							<div class="layerContainer3">
 								<div class="dropBox3"></div>
 								<canvas class="imageLayer3">Only for HTML5 compatible browsers...</canvas>
 								<div class="drawDiv3"></div>
-								<div class="infoLayer3">
-									<div class="infotl3 info"></div>
-									<div class="infotc3 infoc"></div>
-									<div class="infotr3 info"></div>
-									<div class="infocl3 infoc"></div>
-									<div class="infocr3 infoc"></div>
-									<div class="infobl3 info"></div>
-									<div class="infobc3 infoc"></div>
-									<div class="infobr3 info"></div>
-								</div>
 							</div> 
+							<div class="infoLayer3">
+								<div class="infotl3 info"></div>
+								<div class="infotc3 infoc"></div>
+								<div class="infotr3 info"></div>
+								<div class="infocl3 infoc"></div>
+								<div class="infocr3 infoc"></div>
+								<div class="infobl3 info"></div>
+								<div class="infobc3 infoc"></div>
+								<div class="infobr3 info"></div>
+							</div>
+						</td>
+						<td id="lc6" class="hide content5" style="border-top:1px solid #252525;border-left:1px solid #252525;" align="middle">
+							<div class="layerContainer5">
+								<div class="dropBox5"></div>
+								<canvas class="imageLayer5">Only for HTML5 compatible browsers...</canvas>
+								<div class="positionLineDiv2 hide"></div>
+								<div class="drawDiv5"></div>
+							</div> 
+							<div class="infoLayer5">
+								<div class="infotl5 info"></div>
+								<div class="infotc5 infoc"></div>
+								<div class="infotr5 info"></div>
+								<div class="infocl5 infoc"></div>
+								<div class="infocr5 infoc"></div>
+								<div class="infobl5 info"></div>
+								<div class="infobc5 infoc"></div>
+								<div class="infobr5 info"></div>
+							</div>
 						</td>
 					</tr>
+					
 					</table>
 				</div>
 				<div id="rightPanel">
 					<div class="localtion"></div>
-					<button id="changeLayout1_1">1X1布局</button>
-					<button id="changeLayout1_2">1X2布局</button>
-					<button id="changeLayout2_2">2X2布局</button>
-					<button id="generateXY">矢状面、冠状面</button>
-					<div class="clear"></div>
+					<div class="layout-menu">
+						<button id="changeLayoutBtn">切换布局</button>
+						<div class="layout-content">
+							<a href="#" id="layout-1x1">1x1</a>
+							<a href="#" id="layout-2x1">2x1</a>
+							<a href="#" id="layout-2x2">2x2</a>
+						<a href="#" id="layout-xyz">矢状冠状</a> 
+						</div>
+					</div>
+					
 					<!-- Toolbar -->
 					<div class="toolbar" style="width: 300px;text-align:left;"></div>
 					<hr color="#373737">
@@ -575,58 +620,91 @@ display:none;}
 	       //console.log("cliWidth:" + cliWidth);
 	       //console.log("cliHeight:"+ cliHeight);
 	    })  
-	    $("#changeLayout1_1").click(function(){
+	    $("#layout-1x1").click(function(){
 	    		isToggle = 1;
+	    		isGenerateXYZ = 0;
 	    		ColNumberOfLayout = 1;
-	    		RowNumberOfLayout = 1;
-	    	   console.log("1X1 改变布局！！");
+		    	RowNumberOfLayout = 1;
 	    	   $("#lc2").addClass("hide");
 	    	   $("#lc3").addClass("hide");
 	    	   $("#lc4").addClass("hide");
 	    	   $("#lc5").addClass("hide");
 	    	   $("#lc6").addClass("hide");
-	    	   readyApp.fitToSize({ 'width': ($(window).width() - 600) / parseInt( RowNumberOfLayout,10 ) , 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10) });
+	    	   $("#lc1").attr("rowSpan",1); 
+	    	   if(document.getElementById("lc2").className.indexOf("hide") > -1){
+	    	    	readyApp.fitToSize({ 'width': ($(window).width() - 600)  , 'height': $(window).height() - 147 });
+	    	    }else{
+	    	        readyApp.fitToSize({ 'width': ($(window).width() - 600) / 2 , 'height': $(window).height() - 147 });
+	    	   }
+	    	   $(".positionLineDiv0").addClass("hide");
+	    	   $(".positionLineDiv1").addClass("hide");
+	    	   $(".positionLineDiv2").addClass("hide");
+		})
+		$("#layout-2x1").click(function(){
+	    	isToggle = 1;
+	    	isGenerateXYZ = 0;
+	    	ColNumberOfLayout = 1;
+	    	RowNumberOfLayout = 2;
+	    	$("#lc1").attr("rowSpan",1); 
+    	   $("#lc2").removeClass("hide");
+    	   $("#lc3").addClass("hide");
+    	   $("#lc4").addClass("hide");
+    	   $("#lc5").addClass("hide");
+    	   $("#lc6").addClass("hide");
+    	   readyApp.fitToSize({ 'width': ($(window).width() - 600) / parseInt(RowNumberOfLayout,10), 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10)});
+    	   $(".positionLineDiv0").addClass("hide");
+    	   $(".positionLineDiv1").addClass("hide");
+    	   $(".positionLineDiv2").addClass("hide");
+		})
+		$("#layout-2x2").click(function(){
+    		isToggle = 1;
+    		isGenerateXYZ = 0;
+    		ColNumberOfLayout = 2;
+    		RowNumberOfLayout = 2;
+    	   console.log("2X2 改变布局！！");
+    	   $("#lc1").attr("rowSpan",1); 
+    	   $("#lc2").removeClass("hide");
+    	   $("#lc3").removeClass("hide");
+    	   $("#lc4").removeClass("hide");
+    	   $("#lc5").addClass("hide");
+    	   $("#lc6").addClass("hide");
+    	   readyApp.fitToSize({ 'width': ($(window).width() - 600) / parseInt(RowNumberOfLayout,10), 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10)});
+    	   $(".positionLineDiv0").addClass("hide");
+    	   $(".positionLineDiv1").addClass("hide");
+    	   $(".positionLineDiv2").addClass("hide");
+		})
+		 $("#layout-xyz").click(function(){
+    		isToggle = 1;
+    		isGenerateXYZ = 1;
+    		ColNumberOfLayout = 2;
+    		RowNumberOfLayout = 2;
+    	   console.log("2X2 改变布局！！");
+    	   $("#lc5").removeClass("hide");
+    	   $("#lc6").removeClass("hide");
+    	   $("#lc2").addClass("hide");
+    	   $("#lc3").addClass("hide");
+    	   $("#lc4").addClass("hide");
+    	   //设置rowspan=2合并单元格
+    	   
+    	   $("#lc1").attr("rowSpan",2); 
 
-		})
-	    $("#changeLayout1_2").click(function(){
-	    		isToggle = 1;
-	    		ColNumberOfLayout = 1;
-	    		RowNumberOfLayout = 2;
-	    	   console.log("1X2 改变布局！！");
-	    	   $("#lc2").removeClass("hide");
-	    	   $("#lc3").addClass("hide");
-	    	   $("#lc4").addClass("hide");
-	    	   $("#lc5").addClass("hide");
-	    	   $("#lc6").addClass("hide");
-	    	   readyApp.fitToSize({ 'width': ($(window).width() - 600) / parseInt( RowNumberOfLayout,10 ) , 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10) });
-	    	   
-		})
-		$("#changeLayout2_2").click(function(){
-	    		isToggle = 1;
-	    		ColNumberOfLayout = 2;
-	    		RowNumberOfLayout = 2;
-	    	   console.log("2X2 改变布局！！");
-	    	   $("#lc2").removeClass("hide");
-	    	   $("#lc3").removeClass("hide");
-	    	   $("#lc4").removeClass("hide");
-	    	   $("#lc5").addClass("hide");
-	    	   $("#lc6").addClass("hide");
-	    	   readyApp.fitToSize({ 'width': ($(window).width() - 600) / parseInt( RowNumberOfLayout,10 ) , 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10)  });
-	    	
-		})
+    	
+    	   readyApp.generateXYSlices();
+    	   $(".positionLineDiv0").removeClass("hide");
+    	   $(".positionLineDiv1").removeClass("hide");
+    	   $(".positionLineDiv2").removeClass("hide");
+		}) 
 		
-		$("#generateXY").click(function(){
-	    		
-	    	   console.log("生成矢状面");
-	    	   $("#lc2").addClass("hide");
-	    	   $("#lc3").addClass("hide");
-	    	   $("#lc4").addClass("hide");
-	    	   $("#lc5").removeClass("hide");
-	    	   $("#lc6").removeClass("hide");
-	    	   RowNumberOfLayout = 3;
-	    	   ColNumberOfLayout = 1;
-	    	   readyApp.generateXYSlices();
-		})
 	})
+</script>
+<script>
+	
+if (window.parent && window.parent.parent) {
+	window.parent.parent.postMessage(["resultsFrame", {
+		height: document.body.getBoundingClientRect().height,slug: "z4sp5o90"}], "*")
+}
+	
+	
+
 </script>
 </html>

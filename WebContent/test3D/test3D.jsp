@@ -170,6 +170,7 @@ pageEncoding="UTF-8"%>
     	_webGLFriendly = true;
         try {
           // try to create and initialize a 3D renderer
+          debugger;
           threeD = new X.renderer3D();
           threeD.container = '3d';
           threeD.init();

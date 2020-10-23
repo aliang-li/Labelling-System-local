@@ -57,11 +57,7 @@ dwv.gui.getWindowSize = function () {
     //return { 'width': ($(window).width()), 'height': ($(window).height() - 147) };
 	//return { 'width': ($(window).width() - 565)  , 'height': $(window).height() - 147 };
 	//console.log(document.getElementById("lc2").className);
-	/*if(document.getElementById("lc2").className.indexOf("hide") > -1){
-		return { 'width': ($(window).width() - 600)  , 'height': $(window).height() - 147 };
-	}else{*/
 		return { 'width': ($(window).width() - 600) / parseInt(RowNumberOfLayout,10) , 'height': ($(window).height() - 147 ) / parseInt(ColNumberOfLayout,10) };
-	//}
 };
 // Prompt
 dwv.gui.prompt = dwv.gui.base.prompt;
@@ -253,7 +249,14 @@ dwv.gui.Toolbox = function (app)
         threeDButton.href = "http://localhost:8080/BB/test3D/test3D.jsp";
         threeDButton.target="_blank";
         threeDButton.setAttribute("class", buttonClass + " ui-icon-grid");
-        //threeDButton.title = dwv.i18n("basics.drawList");
+        threeDButton.title = dwv.i18n("basics.threeDButton");
+        
+        var xyzSide = document.createElement("a");
+        var xyzSideButtonText= document.createTextNode("冠状矢状");
+        xyzSide.appendChild(xyzSideButtonText);
+        xyzSide.setAttribute("class", buttonClass + " ui-icon-grid");
+        xyzSide.onclick = toXYZSide;
+        xyzSide.title = dwv.i18n("basics.xyzSide");
 
         
         var drawList = document.createElement("a");
@@ -264,10 +267,7 @@ dwv.gui.Toolbox = function (app)
         drawList.setAttribute("id", "download");
         drawList.title = dwv.i18n("basics.drawList");
         
-        
-//        var ww = document.getElementsByClassName(".wj");
-//        ww.onclick = app.loadURLs;
-        
+
         var labelInfo=document.createElement("label");
         labelInfo.id="labelNow";
         labelInfo.style="float:right";
@@ -286,6 +286,7 @@ dwv.gui.Toolbox = function (app)
         node.appendChild(lastButton);
         node.appendChild(nextButton);
         node.appendChild(threeDButton);
+        node.appendChild(xyzSide);
 
         dwv.gui.refreshElement(node);
     };
@@ -362,7 +363,7 @@ function loadCataLog(app){
 		dataType: 'json',
 		success: function(data){
 			var table = $("#mlTable");
-			var a = '<tr style="background-color:rgb(55, 55, 55);"><td align="center">名称</td><td align="center">dcm数</td><td align="center">状态</td></tr>';
+			var a = '<tr style="background-color:rgb(55, 55, 55);"><td align="center">文件名</td><td align="center">文件数</td><td align="center">状态</td></tr>';
 			for (var i in data.name){
 				if (data.status[i] == "yes"){
 					status = "标记中";
@@ -370,11 +371,21 @@ function loadCataLog(app){
 					status = "未标记";
 				}
 				
-				a = a + '<tr style="height:55px" class="wj" id="' + data.name[i] + '"><td>【' + data.name[i]  + '】</td><td>'
+				a = a + '<tr style="height:55px" class="wj" id="' + data.name[i] + '"><td><div id="sliceZ' + data.name[i] + '"><canvas id="minLayer' + data.name[i] + '"style="width:50px;height:50px">' + '</canvas></div>【' + data.name[i]  + '】</td><td>'
 				+ data.num[i] + '</td><td>' + status + '</td></tr>';
+				
+				
 			}
+			
 			table.append(a);
-			//console.log(data.name);
+			
+			for (var i in data.name){
+				var minLayer = document.getElementById("minLayer" + data.name[i]);
+				var dcmarray = [];
+				dcmarray.push(data.firstDcms[i]);
+		        app.generateImageFromUrl(minLayer, dcmarray,"undefined");
+			}
+			
 			
 			
 			//点击方法
@@ -425,4 +436,24 @@ function loadCataLog(app){
             console.log(error);
 		}
       }) 
+}
+
+function toXYZSide(){
+	isToggle = 1;
+	isGenerateXYZ = 1;
+	ColNumberOfLayout = 2;
+	RowNumberOfLayout = 2;
+   console.log("2X2 改变布局！！");
+   $("#lc5").removeClass("hide");
+   $("#lc6").removeClass("hide");
+   $("#lc2").addClass("hide");
+   $("#lc3").addClass("hide");
+   $("#lc4").addClass("hide");
+   //设置rowspan=2合并单元格
+   
+   $("#lc1").attr("rowSpan",2); 
+   $(".positionLineDiv0").removeClass("hide");
+   $(".positionLineDiv1").removeClass("hide");
+   $(".positionLineDiv2").removeClass("hide");
+   readyApp.generateXYSlices();
 }

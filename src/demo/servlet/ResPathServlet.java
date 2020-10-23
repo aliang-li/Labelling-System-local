@@ -51,17 +51,18 @@ public class ResPathServlet extends HttpServlet {
 		File file = null;
 		File[] childs = null;
 		File[] markFiles = null;
-		String path = "D:/asd/" + hospital + "/"  + patientName;
+		String path_after = hospital + "/"  + patientName;
+		String path = "D:/asd/" + path_after;
+		String githubRaw = "http://localhost:8080/test";
 		file = new File(path);
-		childs = file.listFiles();
+		childs = file.listFiles();//多个患者文件夹
 		ArrayList<String> dirName = new ArrayList<String>();
 		ArrayList<String> num = new ArrayList<String>();
 		ArrayList<String> status = new ArrayList<String>();
-		int markNum = 0;
+		ArrayList<String> firstDcms = new ArrayList<String>();
 		for (int i = 0; i < childs.length; i++) {
 			File[] dcms = childs[i].listFiles();
 			if (childs[i].getName().contains("_mask")) {
-				
 			}else {
 				dirName.add(childs[i].getName());
 				num.add(String.valueOf(dcms.length));
@@ -74,19 +75,16 @@ public class ResPathServlet extends HttpServlet {
 					status.add("no");
 				}
 				
-//				if (markNum > 0) {
-//					status.add("标记中");
-//				} else {
-//					status.add("未标记");
-//				}
+				//找出每个患者文件夹内的第一个文件
+				firstDcms.add(githubRaw + "/" + path_after + "/" + childs[i].getName() + "/" + dcms[0].getName());
 			}
 		}
 
-		
 		Map<String, ArrayList<String>> resData = new HashMap<String, ArrayList<String>>();
 		resData.put("name", dirName);
 		resData.put("num", num);
 		resData.put("status", status);
+		resData.put("firstDcms", firstDcms);
         JSONObject jsonObject = JSONObject.fromObject(resData);
 		String jsonData = jsonObject.toString();
 		System.out.println("jsonDate:" + jsonData);
