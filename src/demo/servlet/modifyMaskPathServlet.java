@@ -35,6 +35,10 @@ public class modifyMaskPathServlet extends HttpServlet {
 		
 		if(!("".equals(resParentPath)) ){
 			session.setAttribute("resParentPath", resParentPath);
+			//2020.11.3 lzl添加  改变3d模型的加载数据的path
+			String changPath = resParentPath.substring(0, resParentPath.lastIndexOf("_")) ;
+			session.setAttribute("path", changPath);
+			
 			megString = "restore successful resParentPath ";
 		}
 		//System.out.println("modefyMaskServlet::"+"".equals(resParentPath));

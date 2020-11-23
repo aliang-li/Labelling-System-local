@@ -4876,6 +4876,7 @@ function nf() {
 }
 C(nf, Re);
 nf.prototype.parse = function(a, b, c) {
+	debugger;
     D.Ja(this.f + ".parse");
     var e = b.h,
     d = b.n,
@@ -4911,6 +4912,7 @@ nf.prototype.parse = function(a, b, c) {
     of(this, f[c]),
     c++;
     c = this.zd;
+    debugger;
     var f = this.yd,
     g = f.length,
     l = h = this.hc.length;
@@ -4957,6 +4959,7 @@ function of(a, b) {
         a.hc = [];
         return;
     case "TRIANGLE_STRIPS":
+    	debugger;
         a.Nb = q;
         a.Ub = u;
         a.Tb = u;
@@ -4964,6 +4967,7 @@ function of(a, b) {
         a.hc = [];
         return;
     case "LINES":
+    	debugger;
         a.Nb = q;
         a.Ub = u;
         a.Tb = u;

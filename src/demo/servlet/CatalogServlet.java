@@ -48,7 +48,7 @@ public class CatalogServlet extends HttpServlet {
 		String patientName = request.getParameter("pName");
 		File file = null;
 		File[] childs = null;
-		String path = "D:/asd/" + hospital + "/" + patientName + "/" + dirName;//之后要改的
+		String path = "D:/asd/" + hospital + "/" + patientName + "/" + dirName;//服务器 要改的
 		file = new File(path);
 		childs = file.listFiles();
 		String[] resPathArray = new String[childs.length];
@@ -59,12 +59,10 @@ public class CatalogServlet extends HttpServlet {
 		ArrayList<String> dicomList = new ArrayList<String>();
 		for (int i = 0; i < childs.length; i++) {
 			resPathArray[i] = childs[i].getAbsolutePath();
-			System.out.println("resPathArray:" + resPathArray[i]);
 			absPath = childs[i].getAbsolutePath().replaceAll("\\\\", "/");
 			absPath = absPath.replace(temp, "");
 			resPath[i] = githubRaw + absPath.replace("/", "/").trim();
 			dicomList.add(resPath[i]);
-			System.out.println("resPath:" + resPath[i]);
 		}
 		session.setAttribute("resPATH", resPath);//session也需要改是因为刷新页面index.jsp,最初是通过session拿dicomList
 		
@@ -76,6 +74,10 @@ public class CatalogServlet extends HttpServlet {
 		session.setAttribute("commentsJsonPath", commentsJsonPath);
 		session.setAttribute("jsonPath", jsonPath);
 		session.setAttribute("resParentPath", resParentPath);
+		//2020.11.3 lzl添加
+		String changePath = temp +"/" + hospital + "/" + patientName + "/" + dirName;
+		session.setAttribute("path", changePath);
+		
 		String loadIf = "0";
 		file = new File(path + "_mask/state.json");
 		

@@ -464,6 +464,7 @@ display:none;}
 					<div class="layout-menu">
 						<button id="changeLayoutBtn">切换布局</button>
 						<div class="layout-content">
+							<a href="#" id="layout-1x1_selected">放大选中窗口</a>
 							<a href="#" id="layout-1x1">1x1</a>
 							<a href="#" id="layout-2x1">2x1</a>
 							<a href="#" id="layout-2x2">2x2</a>
@@ -620,22 +621,46 @@ display:none;}
 	       //console.log("cliWidth:" + cliWidth);
 	       //console.log("cliHeight:"+ cliHeight);
 	    })  
+	    $("#layout-1x1_selected").click(function(){
+	    	debugger;
+	    		isToggle = 1;
+	    		isGenerateXYZ = 0;
+	    		ColNumberOfLayout = 1;
+		    	RowNumberOfLayout = 1;
+	    	   /* $("#lc2").addClass("hide");
+	    	   $("#lc3").addClass("hide");
+	    	   $("#lc4").addClass("hide");
+	    	   $("#lc5").addClass("hide");
+	    	   $("#lc6").addClass("hide");  */
+	    	   
+	    	   $("#lc1").attr("rowSpan",1); 
+	    	   for(let i = 1; i <= 6; i++){
+	    		   if(currentWindow == i-1){
+	    			   $("#lc"+i).removeClass("hide")
+	    		   }else{
+	    			   $("#lc"+i).addClass("hide");
+	    		   }
+	    	   }
+	    	   
+	    	   readyApp.fitToSize({ 'width': ($(window).width() - 600)  , 'height': $(window).height() - 147 });
+
+	    	   $(".positionLineDiv0").addClass("hide");
+	    	   $(".positionLineDiv1").addClass("hide");
+	    	   $(".positionLineDiv2").addClass("hide");
+		})
 	    $("#layout-1x1").click(function(){
 	    		isToggle = 1;
 	    		isGenerateXYZ = 0;
 	    		ColNumberOfLayout = 1;
 		    	RowNumberOfLayout = 1;
+		       $("#lc1").removeClass("hide")
 	    	   $("#lc2").addClass("hide");
 	    	   $("#lc3").addClass("hide");
 	    	   $("#lc4").addClass("hide");
 	    	   $("#lc5").addClass("hide");
 	    	   $("#lc6").addClass("hide");
 	    	   $("#lc1").attr("rowSpan",1); 
-	    	   if(document.getElementById("lc2").className.indexOf("hide") > -1){
-	    	    	readyApp.fitToSize({ 'width': ($(window).width() - 600)  , 'height': $(window).height() - 147 });
-	    	    }else{
-	    	        readyApp.fitToSize({ 'width': ($(window).width() - 600) / 2 , 'height': $(window).height() - 147 });
-	    	   }
+	    	   readyApp.fitToSize({ 'width': ($(window).width() - 600)  , 'height': $(window).height() - 147 });
 	    	   $(".positionLineDiv0").addClass("hide");
 	    	   $(".positionLineDiv1").addClass("hide");
 	    	   $(".positionLineDiv2").addClass("hide");
@@ -646,6 +671,7 @@ display:none;}
 	    	ColNumberOfLayout = 1;
 	    	RowNumberOfLayout = 2;
 	    	$("#lc1").attr("rowSpan",1); 
+	    	$("#lc1").removeClass("hide");
     	   $("#lc2").removeClass("hide");
     	   $("#lc3").addClass("hide");
     	   $("#lc4").addClass("hide");
@@ -663,6 +689,7 @@ display:none;}
     		RowNumberOfLayout = 2;
     	   console.log("2X2 改变布局！！");
     	   $("#lc1").attr("rowSpan",1); 
+    	   $("#lc1").removeClass("hide");
     	   $("#lc2").removeClass("hide");
     	   $("#lc3").removeClass("hide");
     	   $("#lc4").removeClass("hide");
@@ -674,11 +701,15 @@ display:none;}
     	   $(".positionLineDiv2").addClass("hide");
 		})
 		 $("#layout-xyz").click(function(){
+		 	if(readyApp.getIsLoadedCount()[currentWindow] != readyApp.getDicomList_store()[currentWindow].length){
+	        	alert("请耐心等待当前窗口加载完成后，再点击按钮");
+	        	return;
+	        }
     		isToggle = 1;
     		isGenerateXYZ = 1;
     		ColNumberOfLayout = 2;
     		RowNumberOfLayout = 2;
-    	   console.log("2X2 改变布局！！");
+    	   console.log("冠状、矢状面布局！！");
     	   $("#lc5").removeClass("hide");
     	   $("#lc6").removeClass("hide");
     	   $("#lc2").addClass("hide");
@@ -687,8 +718,6 @@ display:none;}
     	   //设置rowspan=2合并单元格
     	   
     	   $("#lc1").attr("rowSpan",2); 
-
-    	
     	   readyApp.generateXYSlices();
     	   $(".positionLineDiv0").removeClass("hide");
     	   $(".positionLineDiv1").removeClass("hide");

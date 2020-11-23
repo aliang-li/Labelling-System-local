@@ -246,10 +246,18 @@ dwv.gui.Toolbox = function (app)
         var threeDButton = document.createElement("a");
         var threeDButtonText= document.createTextNode("3D效果");
         threeDButton.appendChild(threeDButtonText); 
-        threeDButton.href = "http://localhost:8080/BB/test3D/test3D.jsp";
+        threeDButton.href = "http://localhost:8080/BB/test3D/3d_vtk4.jsp";
         threeDButton.target="_blank";
         threeDButton.setAttribute("class", buttonClass + " ui-icon-grid");
         threeDButton.title = dwv.i18n("basics.threeDButton");
+        
+        var threeDButton2 = document.createElement("a");
+        var threeDButtonText2= document.createTextNode("3D+label");
+        threeDButton2.appendChild(threeDButtonText2); 
+        threeDButton2.href = "http://localhost:8080/BB/test3D/3d_restruction.jsp";
+        threeDButton2.target="_blank";
+        threeDButton2.setAttribute("class", buttonClass + " ui-icon-grid");
+        threeDButton2.title = dwv.i18n("basics.threeDButton");
         
         var xyzSide = document.createElement("a");
         var xyzSideButtonText= document.createTextNode("冠状矢状");
@@ -286,6 +294,7 @@ dwv.gui.Toolbox = function (app)
         node.appendChild(lastButton);
         node.appendChild(nextButton);
         node.appendChild(threeDButton);
+        node.appendChild(threeDButton2);
         node.appendChild(xyzSide);
 
         dwv.gui.refreshElement(node);
@@ -391,6 +400,14 @@ function loadCataLog(app){
 			//点击方法
 			$(".wj").click(function(){
 				debugger;
+				
+				if(app.getDicomList_store()[currentWindow] != undefined){
+		        	if(app.getIsLoadedCount()[currentWindow] != app.getDicomList_store()[currentWindow].length){
+		        		alert("请耐心等待当前窗口的文件全部加载完成，再点击加载");
+		        		return;
+		        		}
+		    	}
+				
 				//dicomList = ["http://localhost:8080/test/xj/test_wxy/3/test.dcm"];
 				$(this).css("background-color","#373737");
 				$(this).siblings().css("background-color","#252525");
@@ -439,11 +456,15 @@ function loadCataLog(app){
 }
 
 function toXYZSide(){
+	if(readyApp.getIsLoadedCount()[currentWindow] != readyApp.getDicomList_store()[currentWindow].length){
+    	alert("请耐心等待当前窗口加载完成后，再点击按钮");
+    	return;
+    }
 	isToggle = 1;
 	isGenerateXYZ = 1;
 	ColNumberOfLayout = 2;
 	RowNumberOfLayout = 2;
-   console.log("2X2 改变布局！！");
+	 console.log("冠状、矢状面布局！！");
    $("#lc5").removeClass("hide");
    $("#lc6").removeClass("hide");
    $("#lc2").addClass("hide");
