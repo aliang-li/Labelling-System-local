@@ -244,7 +244,7 @@ dwv.gui.Toolbox = function (app)
         
         
         var threeDButton = document.createElement("a");
-        var threeDButtonText= document.createTextNode("3D效果");
+        var threeDButtonText= document.createTextNode("3维重建");
         threeDButton.appendChild(threeDButtonText); 
         threeDButton.href = "http://localhost:8080/BB/test3D/3d_vtk4.jsp";
         threeDButton.target="_blank";
@@ -252,12 +252,13 @@ dwv.gui.Toolbox = function (app)
         threeDButton.title = dwv.i18n("basics.threeDButton");
         
         var threeDButton2 = document.createElement("a");
-        var threeDButtonText2= document.createTextNode("3D+label");
+        var threeDButtonText2= document.createTextNode("MPR多平面重建");
         threeDButton2.appendChild(threeDButtonText2); 
-        threeDButton2.href = "http://localhost:8080/BB/test3D/3d_restruction.jsp";
+        threeDButton2.href = "http://localhost:8080/BB/test3D/test3D.jsp";
         threeDButton2.target="_blank";
         threeDButton2.setAttribute("class", buttonClass + " ui-icon-grid");
         threeDButton2.title = dwv.i18n("basics.threeDButton");
+        
         
         var xyzSide = document.createElement("a");
         var xyzSideButtonText= document.createTextNode("冠状矢状");
@@ -268,12 +269,20 @@ dwv.gui.Toolbox = function (app)
 
         
         var drawList = document.createElement("a");
-        var drawListButtonText= document.createTextNode("添加注释 ");
+        var drawListButtonText= document.createTextNode("绘注信息");
         drawList.appendChild(drawListButtonText); 
         //drawList.href = "#drawList_page";
         drawList.setAttribute("class", buttonClass + " ui-icon-edit");
-        drawList.setAttribute("id", "download");
+        drawList.onclick = toDrawList;
         drawList.title = dwv.i18n("basics.drawList");
+        
+        var webSocketFuntion = document.createElement("a");
+        var webSocketButtonText= document.createTextNode("协作标注");
+        webSocketFuntion.appendChild(webSocketButtonText); 
+        //drawList.href = "#drawList_page";
+        webSocketFuntion.setAttribute("class", buttonClass + " ui-icon-grid");
+        webSocketFuntion.onclick = openWebSocket;
+        //webSocketFuntion.title = dwv.i18n("basics.drawList");
         
 
         var labelInfo=document.createElement("label");
@@ -296,6 +305,7 @@ dwv.gui.Toolbox = function (app)
         node.appendChild(threeDButton);
         node.appendChild(threeDButton2);
         node.appendChild(xyzSide);
+        node.appendChild(webSocketFuntion);
 
         dwv.gui.refreshElement(node);
     };

@@ -282,7 +282,7 @@
 									            	}
 												}
 												
-												if(arrayLen == 3 && /.dcm/.test(array[arrayLen-1])){
+												if(arrayLen == 3 && ( /.dcm/.test(array[arrayLen-1]) || /.dic/.test(array[arrayLen-1]) )){
 									            	// 三级目录中是否含有中文dcm文件
 									            	//if(/.*[\u4e00-\u9fa5]+.*$/.test(array[arrayLen-1]) || /.*[\u4e00-\u9fa5]+.*$/.test(array[arrayLen-2])){
 									            	if(/.*[\u4e00-\u9fa5]+.*$/.test(array[arrayLen-1])) {
@@ -304,8 +304,8 @@
 									            }
 												// 判断三级目录下不是dcm文件
 									            else if(arrayLen == 3 && (/[0-9a-zA-Z\u4e00-\u9fa5]/.test(array[arrayLen-1]))){
-									            		$fileContent.append("<p style='color:red'>" +zipEntry.name + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;非dcm文件，请删除后上传。" + "</p>");
-									            		fileError.push("\n " + zipEntry.name + "    非dcm文件，请删除后上传");
+									            		$fileContent.append("<p style='color:red'>" +zipEntry.name + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;非dcm\dic文件，请删除后上传。" + "</p>");
+									            		fileError.push("\n " + zipEntry.name + "    非dcm\dic文件，请删除后上传");
 									            }
 												
 										}else{

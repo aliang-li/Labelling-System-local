@@ -109,6 +109,14 @@ display:none;}
  height:100%;
  overflow-y:auto;
 }
+#dwv-drawList{
+ 	height:100%;
+}
+.drawsTable{
+	height:75%;
+	display:block;
+	overflow-y:auto;
+}
 #rightPanel{
 	width:300px;
 	padding-left:5px;
@@ -215,6 +223,10 @@ display:none;}
 <script type="text/javascript" src="../test3D/js/xtk_edge.js"></script>
 <script type="text/javascript" src="../test3D/js/xtk_xdat.gui.js"></script>
 
+<script type="text/javascript" src = "./webSocket/sockjs.min.js"></script>
+<script type="text/javascript" src = "./webSocket/webSocketTest.js"></script>
+
+<script type="text/javascript" src = "./zip/zip.js"></script>
 
 <!-- Launch the app -->
 <script type="text/javascript">
@@ -308,7 +320,9 @@ display:none;}
 </head>
 
 <body>
-
+	<input id="sessionId" type="hidden" value="<%=session.getId() %>" />
+	
+	
 	<!-- Main page -->
 	<div data-role="page" data-theme="b" id="main">
 
@@ -491,8 +505,23 @@ display:none;}
 						</table>
 					</div>
 					<hr color="#373737">
+					<!--lzl添加一个选择文件夹的区域  -->
+					<div>
+      					<label>选择文件:</label>
+      					<input id="filelist" name="inputFile" type="file" webkitdirectory directory />
+      					<button id="zipButton" class="btn hide"><a id = "downloadLink"  display>下载zip</a></button>
+    				</div>
+    				<hr color="#373737">
+    				<!-- <button id="toDrawList" class="ui-btn ui-btn-inline ui-btn-icon-top ui-mini ui-icon-grid"></button> -->
 				</div>
-
+				
+				<!--标注信息展示  -->
+				<div id="drawList_page" style="height:100%;">
+					<button id="toRightPanel" class="ui-link ui-btn ui-icon-carat-l ui-btn-icon-left ui-shadow" data-role="button" data-transition="slide">返回</button>
+					<div style="height:100%;">
+						<div id="dwv-drawList" title="Draw list"></div>
+					</div> 
+				</div>
 				<!-- Auth popup -->
 				<div data-role="popup" id="popupAuth">
 					<a href="#" data-rel="back" data-role="button" data-icon="delete"
@@ -561,27 +590,21 @@ display:none;}
 	<!-- /page tags_page-->
 
 	<!-- Draw list page -->
-	<div data-role="page" data-theme="b" id="drawList_page">
+	<!-- <div data-role="page" data-theme="b" id="drawList_page">
 
 		<div data-role="header">
 			<a href="#main" data-icon="back" data-transition="slide"
 				data-direction="reverse" data-i18n="basics.back">Back</a>
 			<h1 data-i18n="basics.drawList">Draw list</h1>
 		</div>
-		<!-- /header -->
+		/header
 
 		<div data-role="content">
-			<!-- DrawList -->
+			DrawList
 			<div id="dwv-drawList" title="Draw list"></div>
 		</div>
-		<!-- /content -->
-		<div data-role="content">
-			<!-- DrawList -->
-			<div id="dwv-drawList" title="Draw list"></div>
-		</div>
-		<!-- /content -->
-
-	</div>
+		/content
+	</div> -->
 
 	<!-- Help page -->
 	<div data-role="page" data-theme="b" id="help_page">
@@ -732,8 +755,73 @@ if (window.parent && window.parent.parent) {
 	window.parent.parent.postMessage(["resultsFrame", {
 		height: document.body.getBoundingClientRect().height,slug: "z4sp5o90"}], "*")
 }
-	
-	
-
 </script>
+
+<script type="text/javascript">
+	function filesInputChange(event){
+		let files = event.target.files || event.dataTransfer.files;
+		let count = 0; //计数用的
+		
+		var zip = new JSZip();
+		
+		for(let i =0; i < files.length; i++){
+			let reader = new FileReader();
+			let file = files[i];
+			reader.fileName = file.name;
+			reader.readAsArrayBuffer(file);
+			reader.onload = function(result){
+	            //读取完毕后输出结果
+	            //console.log(result.target.fileName);
+	            //console.log(this.result);
+	            let fileData = this.result;
+	            let defaultCharacterSet;
+	            let dicomParser2 = new dwv.dicom.DicomParser();
+	            dicomParser2.setDefaultCharacterSet(defaultCharacterSet);
+	            debugger;
+	            dicomParser2.parse(fileData,true);//仅dcm
+	            let dicomElements = dicomParser2.dicomElements;
+	            let write = new dwv.dicom.DicomWriter();
+	            let buffer = write.getBuffer3(fileData,dicomElements);
+	            var blob = new Blob([buffer], {type: 'application/dicom'});
+	            zip.file(result.target.fileName,blob);
+	            count++;
+	            if(count == files.length){
+	            	$("#zipButton").removeClass("hide")
+	            	console.log(zip);
+	            	zip.generateAsync({type:"blob"}).then(function (blob) { // 1) generate the zip file
+	    		        var element1 = document.getElementById("downloadLink");
+	    		    	element1.href = URL.createObjectURL(blob);
+	    		    }, function (err) {
+	    		        jQuery("#zipButton").text(err);
+	    		    });
+	            }
+	        }
+			
+			
+		}
+		/* 
+            var blob = new Blob([buffer], {type: 'application/dicom'})
+            var element = document.getElementById("download");
+            element.href = URL.createObjectURL(blob);
+            element.download = "anonym.dcm";
+		*/
+	} 
+	
+	var filesInput = document.getElementById("filelist");
+	filesInput.addEventListener('change', filesInputChange);
+</script>
+<script type="text/javascript">
+	
+	function toDrawList(){
+		$("#drawList_page").css("display","");
+		$("#rightPanel").css("display","none");
+	}
+	
+	$("#toRightPanel").click(function(){
+		$("#rightPanel").css("display","");
+		$("#drawList_page").css("display","none");
+	});
+	
+</script>
+
 </html>

@@ -504,7 +504,7 @@ public class UploadServlet1 extends HttpServlet {
             if (files[i].isDirectory()) {
             	NotOnlyDicom(files[i]);
             } else {
-            	if(!files[i].getName().contains(".dcm")) {
+            	if(!files[i].getName().contains(".dcm") && !files[i].getName().contains(".dic")) {
             		files[i].delete();
             	}
             }
