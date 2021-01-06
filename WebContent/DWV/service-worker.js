@@ -86,7 +86,8 @@ var urlsToCache = [
     './node_modules/dwv/decoders/pdfjs/jpg.js',
     './node_modules/dwv/decoders/pdfjs/decode-jpegbaseline.js',
     './node_modules/dwv/decoders/rii-mango/lossless-min.js',
-    './node_modules/dwv/decoders/rii-mango/decode-jpegloss.js'
+    './node_modules/dwv/decoders/rii-mango/decode-jpegloss.js',
+    './node_modules/dwv/decoders/rle/decode-rle.js'
     ];
 
 // install
